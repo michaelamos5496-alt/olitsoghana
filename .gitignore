@@ -1,0 +1,6 @@
+# macOS junk
+.DS_Store
+._*
+
+# unused video (the site only uses the two hero videos)
+assets/videos/6327103-uhd_3840_2160_25fps.mp4

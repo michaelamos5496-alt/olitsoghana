@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Menu & Online Ordering | Olisto</title>
+<meta name="description" content="Our menu of authentic Ghanaian dishes. Order online for delivery or pickup.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Montserrat:wght@200;300;400;500&family=Quicksand:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="menu-page">
+
+<div class="notice" id="notice"></div>
+
+<section class="banner">
+  <video id="bannerVideo" muted loop playsinline preload="auto" aria-hidden="true" tabindex="-1"></video>
+  <div class="in">
+    <span class="eyebrow" id="eyebrow"></span>
+    <h1 id="menuTitle"></h1>
+    <p id="menuIntro"></p>
+  </div>
+</section>
+
+<nav class="cats" id="cats" aria-label="Menu categories"></nav>
+
+<main class="menu wrapm" id="menuRoot"></main>
+
+<p class="menu-note" id="menuNote"></p>
+<div class="legend"><span>🌶 Spicy</span><span>🌿 Vegetarian</span></div>
+
+<div style="height:2.5rem"></div>
+
+<!-- order bar + checkout drawer -->
+<button class="orderbar" id="orderBar" hidden><span id="obText"></span><b>Checkout →</b></button>
+<div class="dbg" id="dbg"></div>
+<aside class="drawer" id="drawer" aria-label="Your food basket">
+  <div class="dhead"><h3>Your food basket</h3><button id="dclose" aria-label="Close">✕</button></div>
+
+  <div class="dscroll">
+    <div class="items" id="items"></div>
+
+    <form id="ofForm" novalidate autocomplete="on">
+      <div class="mode" id="mode" role="group" aria-label="Delivery or pickup">
+        <button type="button" data-m="delivery" class="on">Delivery</button>
+        <button type="button" data-m="pickup">Pickup</button>
+      </div>
+
+      <label>Your name<input name="name" required autocomplete="name"></label>
+      <label>Phone number<input name="phone" type="tel" required autocomplete="tel" inputmode="tel"></label>
+
+      <div id="deliveryFields">
+        <label id="areaWrap">Delivery area<select name="area"></select></label>
+        <label>Delivery address<textarea name="address" rows="2" required placeholder="House number, street, landmark" autocomplete="street-address"></textarea></label>
+      </div>
+
+      <label>When
+        <select name="when"><option value="asap">As soon as possible</option><option value="later">Choose a time</option></select>
+      </label>
+      <label id="timeWrap" hidden>Time<input name="time" type="time"></label>
+
+      <label id="payWrap">Payment<select name="payment"></select></label>
+      <p class="momo" id="momoNote" hidden></p>
+
+      <label>Notes for the kitchen (optional)<textarea name="notes" rows="2" placeholder="Allergies, spice level, delivery instructions…"></textarea></label>
+    </form>
+  </div>
+
+  <div class="dfoot">
+    <div class="sum"><span>Subtotal</span><span id="subtotal"></span></div>
+    <div class="sum" id="feeRow"><span>Delivery</span><span id="fee"></span></div>
+    <div class="total"><span>Total</span><span id="total"></span></div>
+    <p class="hint" id="hint" hidden></p>
+    <button class="send" id="checkout">Send order on WhatsApp</button>
+    <button class="clear" id="clear">Clear order</button>
+  </div>
+</aside>
+<div class="toast" id="toast"></div>
+
+<script src="js/data.js"></script>
+<script src="js/common.js"></script>
+<script src="js/menu.js"></script>
+</body>
+</html>

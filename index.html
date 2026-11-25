@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Olisto | Bakery · Bistro · Bar</title>
+<meta name="description" content="Authentic Ghanaian cooking, made fresh and served with warmth.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Cormorant+Garamond:wght@500&family=Montserrat:wght@200;300;400;500&family=Quicksand:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="notice" id="notice"></div>
+
+<section class="hero" id="hero">
+  <div class="photo" id="photo" role="img" aria-label=""></div>
+  <video id="vidA" muted playsinline preload="auto" aria-hidden="true" tabindex="-1"></video>
+  <video id="vidB" muted playsinline preload="auto" aria-hidden="true" tabindex="-1"></video>
+  <div class="hero-in">
+    <h1 id="headline"></h1>
+    <a class="hero-cta" id="heroCta" href="menu.html"></a>
+  </div>
+  <a href="#about" class="down" aria-label="Scroll down"><svg viewBox="0 0 30 30"><path d="m4 10 11 11 11-11"/></svg></a>
+</section>
+
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <span class="eyebrow dark" id="aEyebrow"></span>
+      <h2 id="aTitle"></h2>
+      <div id="aText"></div>
+      <a href="menu.html" class="btn-d" id="aCta"></a>
+    </div>
+    <figure class="about-media reveal" id="aMedia">
+      <video id="aVideo" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+    </figure>
+  </div>
+  <div class="pillars reveal" id="pillars"></div>
+</section>
+
+<section class="exp" id="experience">
+  <div class="exp-text">
+    <span class="exp-eyebrow reveal" id="xEyebrow"></span>
+    <h2 class="reveal" id="xTitle"></h2>
+    <span class="exp-rule reveal"></span>
+    <p class="exp-lead reveal" id="xText"></p>
+    <ol class="exp-list" id="xList"></ol>
+  </div>
+  <div class="exp-media" id="xMedia">
+    <video id="xVideo" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+  </div>
+</section>
+
+<section class="ord" id="order">
+  <div class="ord-grid">
+    <figure class="ord-photo reveal"><img id="oImg" alt="A happy customer holding an Olisto takeaway bag" loading="lazy" hidden></figure>
+    <div class="ord-body">
+      <span class="ord-eyebrow reveal">Order online</span>
+      <h2 class="reveal">Delivery &amp; pickup, made easy</h2>
+      <span class="ord-rule reveal"></span>
+      <p class="ord-lead reveal">Our full menu, ready to order from your phone. Choose your favourites, tell us where to bring them, and we'll confirm on WhatsApp.</p>
+      <div class="steps reveal">
+        <div><span class="n">01</span><h3>Choose</h3><p>Browse the menu and tap + on everything you fancy.</p></div>
+        <div><span class="n">02</span><h3>Checkout</h3><p>Pick delivery or pickup and add your details.</p></div>
+        <div><span class="n">03</span><h3>Enjoy</h3><p>Send the order on WhatsApp, we confirm, cook and bring it over.</p></div>
+      </div>
+      <div class="facts reveal" id="oFacts"></div>
+      <div class="ord-cta reveal">
+        <a href="menu.html" class="go">Order online</a>
+        <a href="#" class="go-line" id="oCall" hidden>Call us</a>
+      </div>
+      <p class="ord-note reveal" id="oNote"></p>
+    </div>
+  </div>
+</section>
+
+<section class="res" id="reservations">
+  <span class="res-eyebrow reveal" id="rEyebrow"></span>
+  <h2 class="reveal" id="rTitle"></h2>
+  <span class="res-rule reveal"></span>
+  <p class="res-text reveal" id="rText"></p>
+  <div class="res-btns reveal">
+    <a class="b-solid" id="rBook" href="#reservations">Book now</a>
+    <a class="b-line" id="rCall" href="#reservations">Call to reserve</a>
+  </div>
+  <p class="res-note reveal" id="rNote"></p>
+  <p class="res-note" id="rMsg" hidden>Online booking isn't connected yet.</p>
+</section>
+
+<section class="contact" id="contact">
+  <iframe class="c-bg" id="cFrame" title="Map to Olisto" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <div class="contact-grid">
+    <div class="c-info">
+      <div class="c-head reveal"><span class="c-eyebrow">How to reach us</span><h2>Contact</h2></div>
+      <div class="c-blocks reveal" id="cBlocks"></div>
+      <div class="c-btns reveal">
+        <a class="c-btn solid" id="cDir" target="_blank" rel="noopener" hidden>Get directions</a>
+        <a class="c-btn" id="cWa" target="_blank" rel="noopener" hidden>Message on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="js/data.js"></script>
+<script src="js/common.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>
