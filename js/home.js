@@ -1,7 +1,8 @@
 document.title = SITE.name;
 $('#headline').textContent = SITE.headline;
 if (SITE.heroImage) $('#photo').style.backgroundImage = `url('${SITE.heroImage}')`; else $('#hero').classList.add('noimg');
-videoLoop([$('#vidA'), $('#vidB')], innerWidth <= 860 ? SITE.heroVideos.slice(0, 1) : SITE.heroVideos);   // phones: one clip only
+const PHONE = matchMedia('(max-width: 860px)').matches;
+videoLoop([$('#vidA'), $('#vidB')], PHONE ? (SITE.heroVideosMobile && SITE.heroVideosMobile.length ? SITE.heroVideosMobile : SITE.heroVideos.slice(0, 1)) : SITE.heroVideos);   // phones: one lighter clip, looped
 $('#heroCta').textContent = SITE.heroCta.label; $('#heroCta').href = SITE.heroCta.href; $('#heroCta').hidden = !SITE.heroCta.label;
 
 /* ---------- About ---------- */
@@ -34,7 +35,7 @@ else if (A.video && !matchMedia('(prefers-reduced-motion: reduce)').matches){
   // start the framed clip only when it scrolls into view
   new IntersectionObserver((es, io) => {
     if (!es[0].isIntersecting) return;
-    av.src = encodeURI(A.video);
+    av.src = encodeURI(PHONE && A.videoMobile ? A.videoMobile : A.video);
     av.addEventListener('playing', () => av.classList.add('on'));
     av.addEventListener('error', () => { av.hidden = true; });
     av.play().catch(() => {});

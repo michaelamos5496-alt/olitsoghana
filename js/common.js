@@ -53,23 +53,55 @@ function place(){
 }
 addEventListener('scroll', place, { passive: true }); addEventListener('resize', place); place();
 
-/* ---------- background video: plays the sources in turn, crossfading, forever ---------- */
+/* ---------- background video ----------
+   Plays the sources in turn with a crossfade (or loops one). Built for phones:
+   - muted + playsinline so iOS/Android allow autoplay
+   - if the phone blocks autoplay (Low Power Mode etc.), retries on the first touch and shows a ▶ button
+   - "reduce motion" / data-saver users get the still picture plus a ▶ button instead of video being forced
+   - the 2nd clip only downloads after the 1st is playing; everything pauses when off-screen or the tab is hidden */
 function videoLoop(els, srcs){
   els = els.filter(Boolean);
-  if (!els.length || !srcs.length || matchMedia('(prefers-reduced-motion: reduce)').matches){ els.forEach(e => e.remove()); return; }
-  const net = navigator.connection;                                 // data-saver or 2G: keep the still image, skip video
-  if (net && (net.saveData || /(^|-)2g$/.test(net.effectiveType || ''))){ els.forEach(e => e.remove()); return; }
+  if (!els.length || !srcs.length){ els.forEach(e => e.remove()); return; }
+  const host = els[0].parentElement;
+  const net = navigator.connection;
+  const lowData = !!(net && (net.saveData || /(^|-)2g$/.test(net.effectiveType || '')));
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const FADE = 1.2;                                   // seconds; keep in sync with the CSS transition
   const multi = srcs.length > 1 && els.length > 1;
-  let idx = 0, active = els[0], busy = false;
-  const load = (el, i) => { el.src = encodeURI(srcs[i % srcs.length]); el.load(); };
-  const fail = () => els.forEach(e => e.remove());
+  let idx = 0, active = els[0], busy = false, started = false, wanted = !(lowData || reduced), second = false;
 
-  els.forEach(e => { e.loop = !multi; e.addEventListener('error', fail); });
-  load(active, 0);
-  // the 2nd clip only starts downloading once the 1st is playing, so the first one loads fast
-  active.addEventListener('playing', () => { active.classList.add('on'); if (multi) setTimeout(() => load(els[1], 1), 1200); }, { once: true });
-  active.play().catch(() => {});
+  const btn = document.createElement('button');
+  btn.type = 'button'; btn.className = 'vid-play'; btn.hidden = true; btn.setAttribute('aria-label', 'Play background video');
+  btn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>';
+  host.appendChild(btn);
+
+  const load = (el, i) => { el.src = encodeURI(srcs[i % srcs.length]); el.load(); };
+  els.forEach(e => {
+    e.muted = true; e.defaultMuted = true; e.playsInline = true; e.loop = !multi; e.disableRemotePlayback = true;
+    ['muted', 'playsinline', 'webkit-playsinline'].forEach(a => e.setAttribute(a, ''));
+    e.addEventListener('error', () => { els.forEach(x => x.remove()); btn.remove(); });   // can't decode → keep the still picture
+  });
+
+  function tryPlay(){
+    if (!started){ started = true; load(active, 0); }
+    const p = active.play();
+    if (p && p.catch) p.catch(() => { btn.hidden = false; });        // autoplay blocked → offer a tap
+  }
+  active.addEventListener('playing', () => {
+    btn.hidden = true; active.classList.add('on');
+    if (multi && !second){ second = true; setTimeout(() => load(els[1], 1), 1200); }   // 2nd clip downloads only now
+  });
+
+  btn.onclick = () => { wanted = true; btn.hidden = true; tryPlay(); };
+  // first touch anywhere = permission to play (iOS Low Power Mode etc.)
+  ['touchend', 'pointerup', 'click', 'keydown'].forEach(ev => addEventListener(ev, () => { if (wanted && started && active.paused) active.play().catch(() => {}); }, { passive: true }));
+  setTimeout(() => { if (wanted && started && !active.classList.contains('on')) btn.hidden = false; }, 8000);   // still not playing → show the button
+
+  // save battery + data: pause when the section scrolls out of view or the tab is hidden
+  new IntersectionObserver(es => { if (!started || !wanted) return; es[0].isIntersecting ? active.play().catch(() => {}) : active.pause(); }, { threshold: .05 }).observe(host);
+  document.addEventListener('visibilitychange', () => { if (!started || !wanted) return; document.hidden ? active.pause() : active.play().catch(() => {}); });
+
+  if (wanted) tryPlay(); else btn.hidden = false;
   if (!multi) return;
 
   function next(){

@@ -3,7 +3,7 @@ $('#eyebrow').textContent = SITE.name;
 $('#menuTitle').textContent = SITE.menuTitle;
 $('#menuIntro').textContent = SITE.menuIntro; $('#menuIntro').hidden = !SITE.menuIntro;
 $('#menuNote').textContent = SITE.menuNote; $('#menuNote').hidden = !SITE.menuNote;
-videoLoop([$('#bannerVideo')], SITE.heroVideos.slice(0, 1));
+videoLoop([$('#bannerVideo')], matchMedia('(max-width: 860px)').matches && SITE.heroVideosMobile && SITE.heroVideosMobile.length ? SITE.heroVideosMobile : SITE.heroVideos.slice(0, 1));
 
 /* ---------- menu sections ---------- */
 const TAG = { spicy: ['🌶', 'Spicy'], veg: ['🌿', 'Vegetarian'] };
