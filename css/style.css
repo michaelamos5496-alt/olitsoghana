@@ -699,3 +699,59 @@ img,video{max-width:100%}
   .exp h2,.res h2,.ord h2{letter-spacing:.16em}
   .nav ul{gap:1.4rem}
 }
+
+/* =====================================================================
+   iPHONE / SAFARI POLISH
+   ===================================================================== */
+/* the area revealed when you pull past the top/bottom of the page matches the brand, not white */
+html{background-color:#2b1b13}
+
+/* older iOS (<16) has no overflow-x:clip: fall back to hidden (never breaks sticky because it's on body) */
+body{overflow-x:hidden;overflow-x:clip}
+
+/* Safari needs the -webkit- prefix for blurred glass headers */
+.top.solid,.cats,.orderbar{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+
+/* the notch/Dynamic Island: keep the header content below the status bar even in "black-translucent" mode */
+.top{padding-top:max(1rem,calc(env(safe-area-inset-top) + .4rem))}
+.top.solid{padding-top:max(.55rem,calc(env(safe-area-inset-top) + .2rem))}
+.notice{padding-top:env(safe-area-inset-top)}
+
+/* iOS draws its own rounded/inset styles on form controls — neutralise and size them consistently */
+input,select,textarea,button{-webkit-appearance:none;appearance:none;border-radius:0}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%232b1b13' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.4rem}
+input[type=date],input[type=time]{min-height:48px;line-height:1.2;display:block}
+input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and-time-value{text-align:left;min-height:1.2em}
+.dscroll input,.dscroll select,.dscroll textarea{min-height:48px}
+/* iOS keeps a faint gray highlight on tapped links/buttons otherwise */
+a,button{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none}
+/* numbers/phone numbers should look like the rest of the text, not iOS blue links */
+a[href^="tel"]{color:inherit}
+/* smoother momentum scrolling in the swipe sliders and the drawer */
+.pillars,.exp-list,.ord .steps,.catrow,.dscroll,.drawer{-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+/* the whole page should not bounce sideways when a slider reaches its end */
+.pillars,.exp-list,.ord .steps,.catrow{overscroll-behavior-x:contain}
+/* videos: iOS paints them in a separate layer — keep them behind text and avoid flicker */
+.hero video,.banner video,.about-media video,.exp-media video{-webkit-transform:translateZ(0);transform:translateZ(0)}
+.hero video{transform:scale(1.05) translateZ(0)}
+/* text rendering */
+body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+
+/* short iPhones (SE / 8: ~568–667px tall): make the hero and drawer fit without cramping */
+@media(max-width:860px) and (max-height:700px){
+  .hero{min-height:0}
+  .hero h1{font-size:clamp(1.55rem,7.4vw,2.1rem)}
+  .hero-in{gap:1.2rem}
+  .top .logo img{height:50px}
+  .dhead{padding-top:1rem}
+  .dfoot{padding-top:.7rem}
+}
+/* landscape iPhones: header must not eat the screen */
+@media(max-height:480px) and (orientation:landscape){
+  .top{padding-top:max(.4rem,env(safe-area-inset-top))}
+  .logo img{height:40px}
+  .hero{height:auto;min-height:100svh;padding:5.5rem 1.5rem 3rem}
+  .hero h1{font-size:clamp(1.5rem,5vw,2.2rem)}
+  .overlay{justify-content:flex-start;padding-top:4rem;overflow:auto}
+}
+.dscroll select{background-color:#fff;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%232b1b13' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.4rem}
