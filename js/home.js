@@ -1,7 +1,7 @@
 document.title = SITE.name;
 $('#headline').textContent = SITE.headline;
 if (SITE.heroImage) $('#photo').style.backgroundImage = `url('${SITE.heroImage}')`; else $('#hero').classList.add('noimg');
-videoLoop([$('#vidA'), $('#vidB')], SITE.heroVideos);
+videoLoop([$('#vidA'), $('#vidB')], innerWidth <= 860 ? SITE.heroVideos.slice(0, 1) : SITE.heroVideos);   // phones: one clip only
 $('#heroCta').textContent = SITE.heroCta.label; $('#heroCta').href = SITE.heroCta.href; $('#heroCta').hidden = !SITE.heroCta.label;
 
 /* ---------- About ---------- */

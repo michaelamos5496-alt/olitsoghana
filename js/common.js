@@ -57,6 +57,8 @@ addEventListener('scroll', place, { passive: true }); addEventListener('resize',
 function videoLoop(els, srcs){
   els = els.filter(Boolean);
   if (!els.length || !srcs.length || matchMedia('(prefers-reduced-motion: reduce)').matches){ els.forEach(e => e.remove()); return; }
+  const net = navigator.connection;                                 // data-saver or 2G: keep the still image, skip video
+  if (net && (net.saveData || /(^|-)2g$/.test(net.effectiveType || ''))){ els.forEach(e => e.remove()); return; }
   const FADE = 1.2;                                   // seconds; keep in sync with the CSS transition
   const multi = srcs.length > 1 && els.length > 1;
   let idx = 0, active = els[0], busy = false;
@@ -65,8 +67,8 @@ function videoLoop(els, srcs){
 
   els.forEach(e => { e.loop = !multi; e.addEventListener('error', fail); });
   load(active, 0);
-  if (multi) load(els[1], 1);
-  active.addEventListener('playing', () => active.classList.add('on'), { once: true });
+  // the 2nd clip only starts downloading once the 1st is playing, so the first one loads fast
+  active.addEventListener('playing', () => { active.classList.add('on'); if (multi) setTimeout(() => load(els[1], 1), 1200); }, { once: true });
   active.play().catch(() => {});
   if (!multi) return;
 

@@ -29,9 +29,9 @@ const SITE = {
 
   heroVideos: [                           // background videos: they crossfade into each other and loop
     "assets/videos/hero video.mp4",
-    "assets/videos/hero video 2.mp4"
+    "assets/videos/web/hero-2.mp4"      // compressed copy (9 MB instead of 20 MB)
   ],
-  heroImage: "",                          // optional still shown until the video loads / if it can't play
+  heroImage: "assets/images/hero-poster.jpg",   // still shown instantly while the video loads, and if it can't play
 
   notice: { label: "Reservation notice", text: "" },   // beige bar at the very top; text "" hides it
 
@@ -55,7 +55,7 @@ const SITE = {
       "Our menu reflects the same intention: fresh bakes, thoughtful dishes, and crafted drinks, all made to nourish and connect.",
       "Welcome to OLISTO rebirth!!"
     ],
-    video: "assets/videos/hero video 2.mp4",   // framed clip beside the story ("" to use a photo instead)
+    video: "assets/videos/web/hero-2.mp4",   // framed clip beside the story ("" to use a photo instead)
     image: "",                                  // optional photo, e.g. "assets/images/about.jpg"
     pillars: [                                  // from "Minimal. Warm. Grounded in experience."
       { title: "Minimal", text: "" },
